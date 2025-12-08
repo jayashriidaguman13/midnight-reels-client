@@ -60,7 +60,7 @@
 <script>
 import api from "../api.js";
 import CommentsCard from "../components/CommentsCard.vue";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import Swal from "sweetalert2";
 
 export default {

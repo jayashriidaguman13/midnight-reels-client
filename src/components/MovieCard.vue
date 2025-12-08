@@ -5,9 +5,7 @@
     <p class="movie-genre">{{ movie.genre }}</p>
     <p class="movie-desc">{{ movie.description }}</p>
 
-    <button class="view-btn" @click="handleView">
-      View Movie
-    </button>
+    <button class="view-btn" @click="handleView">View Movie</button>
   </div>
 </template>
 

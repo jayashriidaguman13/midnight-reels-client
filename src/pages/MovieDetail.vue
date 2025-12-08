@@ -1,6 +1,5 @@
 <template>
   <div class="detail-page">
-    <!-- Header -->
     <header class="detail-header">
       <div class="header-left">
         <button @click="$router.push('/movies')" class="back-btn">
@@ -9,9 +8,7 @@
       </div>
     </header>
 
-    <!-- Main Layout -->
     <div class="detail-container">
-      <!-- LEFT: Movie Card -->
       <div class="left-panel">
         <div class="movie-detail-card" v-if="movie">
           <h2 class="movie-title">{{ movie.title }}</h2>
@@ -21,16 +18,12 @@
         </div>
       </div>
 
-      <!-- RIGHT: Comments -->
       <div class="right-panel">
-        <!-- Fixed header area -->
         <div class="comment-header-area">
           <button class="add-comment-btn" @click="showModal = true">
             Add Comment
           </button>
         </div>
-
-        <!-- Scrollable comments area -->
 
         <div class="comments-scroll">
           <CommentsCard
@@ -45,7 +38,6 @@
       </div>
     </div>
 
-    <!-- Modal -->
     <div v-if="showModal" class="modal-overlay">
       <div class="modal-box">
         <h3>Add Comment</h3>
@@ -68,7 +60,7 @@
 <script>
 import api from "../api.js";
 import CommentsCard from "../components/CommentsCard.vue";
-import { jwtDecode } from "jwt-decode";
+import jwtDecode from "jwt-decode";
 import Swal from "sweetalert2";
 
 export default {
@@ -79,7 +71,8 @@ export default {
       comments: [],
       showModal: false,
       newComment: "",
-      currentUserId: ""
+      currentUserId: "",
+      editingCommentId: null
     };
   },
   async mounted() {
@@ -136,7 +129,7 @@ export default {
       } catch (err) {
         console.error("Failed to post comment", err);
       }
-},
+    },
     handleEditComment(comment) {
       this.showModal = true;
       this.newComment = comment.comment;
@@ -209,7 +202,6 @@ export default {
   height: calc(100vh - 80px);
 }
 
-/* LEFT PANEL */
 .left-panel {
   width: 50%;
   display: flex;
@@ -227,28 +219,11 @@ export default {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
-.movie-title {
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
+.movie-title { font-size: 2rem; margin-bottom: 10px; }
+.movie-meta { font-size: 1rem; margin-bottom: 12px; }
+.movie-genre { font-size: 0.95rem; font-weight: bold; margin-bottom: 15px; }
+.movie-desc { font-size: 1rem; line-height: 1.5; }
 
-.movie-meta {
-  font-size: 1rem;
-  margin-bottom: 12px;
-}
-
-.movie-genre {
-  font-size: 0.95rem;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-
-.movie-desc {
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-/* RIGHT PANEL */
 .right-panel {
   width: 50%;
   display: flex;
@@ -275,14 +250,12 @@ export default {
   cursor: pointer;
 }
 
-/* Scroll area */
 .comments-scroll {
   flex: 1;
   overflow-y: auto;
   padding-right: 10px;
 }
 
-/* MODAL */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -306,9 +279,7 @@ export default {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
-.modal-box h3 {
-  margin-bottom: 15px;
-}
+.modal-box h3 { margin-bottom: 15px; }
 
 .modal-box textarea {
   width: 100%;
@@ -335,30 +306,13 @@ export default {
   cursor: pointer;
 }
 
-.post-btn {
-  background: #0b1426;
-  color: white;
-}
+.post-btn { background: #0b1426; color: white; }
+.cancel-btn { background: #ccc; }
 
-.cancel-btn {
-  background: #ccc;
-}
-
-/* MOBILE RESPONSIVE */
 @media (max-width: 900px) {
-  .detail-container {
-    flex-direction: column;
-  }
-
+  .detail-container { flex-direction: column; }
   .left-panel,
-  .right-panel {
-    width: 100%;
-    height: auto;
-  }
-
-  .movie-detail-card {
-    width: 90%;
-    margin: 20px 0;
-  }
+  .right-panel { width: 100%; height: auto; }
+  .movie-detail-card { width: 90%; margin: 20px 0; }
 }
 </style>

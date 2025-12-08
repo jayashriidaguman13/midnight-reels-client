@@ -14,7 +14,6 @@
       </div>
     </header>
 
-    <!-- ADMIN VIEW -->
     <section v-if="isAdmin" class="admin-section">
       <h2>Admin Dashboard</h2>
       <button class="add-movie-btn" @click="showAddModal = true">Add Movie</button>
@@ -44,7 +43,6 @@
       </table>
     </section>
 
-    <!-- REGULAR USER VIEW -->
     <section v-else class="movies-section">
       <h2>Now Showing</h2>
       <div class="movies-grid">
@@ -52,7 +50,6 @@
       </div>
     </section>
 
-    <!-- ADD / EDIT MODAL -->
     <div v-if="showAddModal" class="modal-overlay">
       <div class="modal-box">
         <h3>{{ editingMovie ? 'Edit Movie' : 'Add Movie' }}</h3>
@@ -73,7 +70,7 @@
 <script>
 import MovieCard from "../components/MovieCard.vue";
 import api from "../api.js";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 export default {
   name: "Movies",
@@ -133,9 +130,9 @@ export default {
     async submitMovie() {
       try {
         if (this.editingMovie) {
-          const res = await api.put(`/movies/updateMovie/${this.editingMovie._id}`, this.movieForm);
+          await api.put(`/movies/updateMovie/${this.editingMovie._id}`, this.movieForm);
         } else {
-          const res = await api.post("/movies/addMovie", this.movieForm);
+          await api.post("/movies/addMovie", this.movieForm);
         }
         await this.loadMovies();
         this.cancelModal();

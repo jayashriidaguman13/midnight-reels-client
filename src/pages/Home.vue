@@ -3,8 +3,8 @@
     <header class="navbar">
       <div class="navbar-buttons">
         <button class="nav-btn" v-if="!isLoggedIn" @click="$router.push('/login')">Login</button>
-        <button class="nav-btn"  v-if="!isLoggedIn" @click="$router.push('/register')">Register</button>
-        <button class="nav-btn"  v-if="isLoggedIn" @click="logout">Logout</button>
+        <button class="nav-btn" v-if="!isLoggedIn" @click="$router.push('/register')">Register</button>
+        <button class="nav-btn" v-if="isLoggedIn" @click="logout">Logout</button>
       </div>
     </header>
 
@@ -13,9 +13,7 @@
       <div class="hero-content">
         <img src="/images/logo.png" alt="Midnight Reels Logo" class="logo" />
         <h1>Midnight Reels</h1>
-        <p>
-          Where stories come alive after dark. Discover, explore, and dive into cinematic legends.
-        </p>
+        <p>Where stories come alive after dark. Discover, explore, and dive into cinematic legends.</p>
         <button @click="$router.push('/movies')" class="view-btn">View Movies</button>
       </div>
     </section>
@@ -25,11 +23,8 @@
 <script>
 export default {
   name: "Home",
-
   data() {
-    return {
-      isLoggedIn: false
-    };
+    return { isLoggedIn: false };
   },
   mounted() {
     this.checkAuth();
@@ -66,6 +61,8 @@ export default {
 
 .navbar-buttons .nav-btn {
   margin-left: 10px;
+  margin: 5px;
+  margin-top: -1px;
   padding: 8px 20px;
   font-size: 0.95rem;
   background: white;
@@ -75,8 +72,6 @@ export default {
   cursor: pointer;
   border: 2px solid #0b1426;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  margin: 5px;
-  margin-top: -1px;
 }
 
 .home-page {
@@ -132,7 +127,7 @@ export default {
   font-size: 1.5rem;
   opacity: 0.9;
   text-shadow: 15px 5px 2px rgba(0, 0, 0, 0.9);
-  -webkit-text-stroke:0.5px #ffffff;
+  -webkit-text-stroke: 0.5px #ffffff;
 }
 
 .view-btn {

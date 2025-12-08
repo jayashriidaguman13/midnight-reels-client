@@ -6,9 +6,7 @@
       </span>
       <div v-if="isOwner" class="actions">
         <button @click="$emit('edit', comment)" class="edit-btn">Edit</button>
-        <button @click="$emit('delete', comment._id)" class="delete-btn">
-          Delete
-        </button>
+        <button @click="$emit('delete', comment._id)" class="delete-btn">Delete</button>
       </div>
     </div>
     <p class="comment-text">{{ comment.comment }}</p>
@@ -46,8 +44,14 @@ export default {
   align-items: center;
   margin-bottom: 8px;
 }
-.username { font-weight: bold; font-size: 1rem; }
-.actions { display: flex; gap: 10px; }
+.username {
+  font-weight: bold;
+  font-size: 1rem;
+}
+.actions {
+  display: flex;
+  gap: 10px;
+}
 .edit-btn,
 .delete-btn {
   background: transparent;
@@ -56,6 +60,11 @@ export default {
   cursor: pointer;
   color: #0b1426;
 }
-.delete-btn { color: #b00020; }
-.comment-text { font-size: 0.95rem; line-height: 1.4; }
+.delete-btn {
+  color: #b00020;
+}
+.comment-text {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
 </style>

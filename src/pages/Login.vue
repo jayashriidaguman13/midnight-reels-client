@@ -7,18 +7,8 @@
     <div class="login-container">
       <h2>Login</h2>
       <form @submit.prevent="loginUser">
-        <input
-          type="email"
-          v-model="form.email"
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          v-model="form.password"
-          placeholder="Password"
-          required
-        />
+        <input type="email" v-model="form.email" placeholder="Email" required />
+        <input type="password" v-model="form.password" placeholder="Password" required />
         <button type="submit" class="submit-btn">Login</button>
       </form>
       <p class="register-link">
@@ -37,10 +27,7 @@ export default {
   name: "Login",
   data() {
     return {
-      form: {
-        email: "",
-        password: ""
-      },
+      form: { email: "", password: "" },
       error: ""
     };
   },

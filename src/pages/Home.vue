@@ -2,8 +2,9 @@
   <div class="home-page">
     <header class="navbar">
       <div class="navbar-buttons">
-        <button @click="$router.push('/login')" class="nav-btn">Login</button>
-        <button @click="$router.push('/register')" class="nav-btn">Register</button>
+        <button class="nav-btn" v-if="!isLoggedIn" @click="$router.push('/login')">Login</button>
+        <button class="nav-btn"  v-if="!isLoggedIn" @click="$router.push('/register')">Register</button>
+        <button class="nav-btn"  v-if="isLoggedIn" @click="logout">Logout</button>
       </div>
     </header>
 
@@ -24,6 +25,26 @@
 <script>
 export default {
   name: "Home",
+
+  data() {
+    return {
+      isLoggedIn: false
+    };
+  },
+  mounted() {
+    this.checkAuth();
+  },
+  methods: {
+    checkAuth() {
+      const token = localStorage.getItem("token");
+      this.isLoggedIn = !!token;
+    },
+    logout() {
+      localStorage.removeItem("token");
+      this.isLoggedIn = false;
+      this.$router.push("/login");
+    }
+  }
 };
 </script>
 
@@ -44,7 +65,7 @@ export default {
 }
 
 .navbar-buttons .nav-btn {
-  margin-left: 15px;
+  margin-left: 10px;
   padding: 8px 20px;
   font-size: 0.95rem;
   background: white;
@@ -52,7 +73,10 @@ export default {
   border: none;
   border-radius: 25px;
   cursor: pointer;
+  border: 2px solid #0b1426;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin: 5px;
+  margin-top: -1px;
 }
 
 .home-page {

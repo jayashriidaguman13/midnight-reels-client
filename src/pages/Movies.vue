@@ -1,6 +1,6 @@
 <template>
   <div class="movies-page">
-    <header class="movies-header" v-if="!isAdmin">
+    <header class="movies-header">
       <div class="header-left">
         <button @click="$router.push('/')" class="back-btn">Back To Home</button>
       </div>

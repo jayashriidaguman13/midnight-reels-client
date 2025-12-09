@@ -4,9 +4,11 @@
       <div class="header-left">
         <button @click="$router.push('/')" class="back-btn">Back To Home</button>
       </div>
+
       <div class="header-center">
         <img src="/images/logo.png" alt="Midnight Reels Logo" class="logo" />
       </div>
+
       <div class="header-right">
         <button v-if="!isLoggedIn" @click="$router.push('/login')" class="nav-btn">Login</button>
         <button v-if="!isLoggedIn" @click="$router.push('/register')" class="nav-btn">Register</button>
@@ -18,29 +20,31 @@
       <h2>Admin Dashboard</h2>
       <button class="add-movie-btn" @click="showAddModal = true">Add Movie</button>
 
-      <table class="movies-table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Year</th>
-            <th>Director</th>
-            <th>Genre</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="movie in movies" :key="movie._id">
-            <td>{{ movie.title }}</td>
-            <td>{{ movie.year }}</td>
-            <td>{{ movie.director }}</td>
-            <td>{{ movie.genre }}</td>
-            <td>
-              <button @click="editMovie(movie)">Edit</button>
-              <button @click="confirmDeleteMovie(movie._id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table class="movies-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Year</th>
+              <th>Director</th>
+              <th>Genre</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="movie in movies" :key="movie._id">
+              <td>{{ movie.title }}</td>
+              <td>{{ movie.year }}</td>
+              <td>{{ movie.director }}</td>
+              <td>{{ movie.genre }}</td>
+              <td class="action-buttons">
+                <button @click="editMovie(movie)">Edit</button>
+                <button @click="confirmDeleteMovie(movie._id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section v-else class="movies-section">
@@ -58,6 +62,7 @@
         <input v-model="movieForm.director" placeholder="Director" />
         <input v-model="movieForm.genre" placeholder="Genre" />
         <textarea v-model="movieForm.description" placeholder="Description"></textarea>
+
         <div class="modal-actions">
           <button @click="submitMovie">{{ editingMovie ? 'Update' : 'Add' }}</button>
           <button @click="cancelModal">Cancel</button>
@@ -171,7 +176,7 @@ export default {
   display: flex;
   position: relative;
   height: 35vh;
-  padding: 10px 20px;
+  padding: 16px 20px;
 }
 
 .header-left,
@@ -179,12 +184,24 @@ export default {
 .header-right {
   flex: 1;
   display: flex;
+}
+
+.header-left {
+  justify-content: flex-start;
   align-items: flex-start;
 }
 
-.header-left { justify-content: flex-start; }
-.header-center { justify-content: center; align-items: center; }
-.header-right { justify-content: flex-end; }
+.header-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.header-right {
+  justify-content: flex-end;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 
 .header-left .back-btn,
 .header-right .nav-btn {
@@ -192,33 +209,177 @@ export default {
   font-size: 0.95rem;
   background: white;
   color: #0b1426;
-  border: none;
+  border: 2px solid #0b1426;
   border-radius: 25px;
   cursor: pointer;
-  border: 2px solid #0b1426;
 }
 
-.header-right .nav-btn { margin: 5px; margin-top: -1px; }
-.header-center .logo { height: 150px; margin-top: 0.5rem; margin-left: 2.5rem; }
+.header-right .nav-btn {
+  margin: 0;
+}
 
-.movies-section { flex: 1; padding: 10px 20px; text-align: center; overflow-y: auto; }
-.movies-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; margin: 0 1rem; }
-.movies-section h2 { font-size: 2.8rem; margin: 10px 1rem 30px 2rem; }
+.header-center .logo {
+  height: 150px;
+  margin-top: 0.5rem;
+  margin-left: 2.5rem;
+}
+
+.movies-section {
+  flex: 1;
+  padding: 16px;
+  text-align: center;
+  overflow-y: auto;
+}
+
+.movies-section h2 {
+  font-size: 2.8rem;
+  margin: 10px 0 30px;
+}
+
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  margin: 0 1rem;
+}
 
 .admin-section {
   padding: 20px;
   text-align: center;
 }
-.movies-table { width: 90%; margin: 0 auto; border-collapse: collapse; }
-.movies-table th, .movies-table td { border: 1px solid #fff; padding: 10px; }
-.movies-table th { background-color: #1b2340; }
-.add-movie-btn { margin-bottom: 15px; padding: 10px 20px; background: #fff; color: #0b1426; border: none; border-radius: 5px; cursor: pointer; }
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.movies-table {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.movies-table th,
+.movies-table td {
+  border: 1px solid #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+.movies-table th {
+  background-color: #1b2340;
+}
+
+.add-movie-btn {
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  background: #fff;
+  color: #0b1426;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
 .modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 9999;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 10px;
 }
-.modal-box { background: #fff; color: #0b1426; padding: 20px; border-radius: 10px; width: 400px; max-width: 90%; }
-.modal-box input, .modal-box textarea { width: 100%; margin-bottom: 10px; padding: 8px; border-radius: 5px; border: 1px solid #ccc; }
-.modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
-.modal-actions button { padding: 8px 15px; border-radius: 5px; border: none; cursor: pointer; }
+
+.modal-box {
+  background: #fff;
+  color: #0b1426;
+  padding: 20px;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 95%;
+}
+
+.modal-box input,
+.modal-box textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-actions button {
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .movies-header {
+    height: auto;
+  }
+
+  .header-center .logo {
+    height: 120px;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .movies-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .header-left,
+  .header-center,
+  .header-right {
+    flex: none;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .movies-section h2 {
+    font-size: 2rem;
+  }
+
+  .movies-grid {
+    gap: 16px;
+    margin: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-center .logo {
+    height: 90px;
+  }
+
+  .header-left .back-btn,
+  .header-right .nav-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .movies-table th,
+  .movies-table td {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+}
 </style>
